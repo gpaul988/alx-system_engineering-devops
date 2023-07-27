@@ -1,0 +1,7 @@
+#!/usr/bin/env bash
+# Graham S. Paul (100-read_and_cut) -  Script to display username, user id
+
+while IFS=':' read -r username _ uid _ homedir _; do
+    echo "$username:$uid:$homedir"
+done < /etc/passwd
+
