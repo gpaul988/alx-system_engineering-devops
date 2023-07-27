@@ -1,0 +1,17 @@
+#!/usr/bin/env bash
+# Graham S. Paul (4-if_9_say_hi) - This script displays "Best School" 10 times, and on the 9th iteration, it displays "Hi" on a new line
+
+counter=1
+
+while [ $counter -le 10 ]
+do
+  if [ $counter -eq 9 ]
+  then
+    echo "Best School"
+    echo "Hi"
+  else
+    echo "Best School"
+  if
+
+  counter=$((counter + 1))
+done
