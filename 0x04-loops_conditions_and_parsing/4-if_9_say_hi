@@ -11,7 +11,7 @@ do
     echo "Hi"
   else
     echo "Best School"
-  if
+  fi
 
   counter=$((counter + 1))
 done
