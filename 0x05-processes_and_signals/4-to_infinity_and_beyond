@@ -1,0 +1,7 @@
+#!/usr/bin/env bash
+# Graham S. Paul (4-to_infinity_and_beyond) - Print to infinity and beyond indefinitely
+
+while true; do
+	echo -e "To infinity and beyond"
+	sleep 2
+done
