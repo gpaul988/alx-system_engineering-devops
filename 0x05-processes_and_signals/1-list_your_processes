@@ -1,0 +1,4 @@
+#!/usr/bin/env bash
+# Graham S. Paul (1-list_your_processes) - Print all processes (a): user-oriented (u), w/wo TTY (x), show heirachy (f)
+
+ps -auxf
