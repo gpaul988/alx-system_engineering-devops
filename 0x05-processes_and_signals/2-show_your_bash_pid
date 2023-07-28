@@ -1,0 +1,5 @@
+#!/usr/bin/env bash
+# Graham S. Paul (2-show_your_bash_pid) - Get bash pid
+# shellcheck disable=SC2009
+
+ps -auxf | grep "bash"
