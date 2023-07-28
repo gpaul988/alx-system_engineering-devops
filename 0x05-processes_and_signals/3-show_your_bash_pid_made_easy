@@ -1,0 +1,4 @@
+#!/usr/bin/env bash
+# Graham S. Paul (3-show_your_bash_pid_made_easy) - Print bash PID made easy
+
+pgrep -l bash
