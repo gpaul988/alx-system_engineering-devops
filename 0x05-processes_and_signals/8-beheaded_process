@@ -1,0 +1,5 @@
+#!/usr/bin/env bash
+# Graham S. Paul (8-beheaded_process) - Decapitate the process
+# Kill forcibly
+
+pkill -KILL -f "7-highlander"
