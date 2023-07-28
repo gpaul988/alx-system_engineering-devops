@@ -1,0 +1,4 @@
+#!/usr/bin/env bash
+# Graham S. Paul (0-what-is-my-pid) - What is my PID
+
+echo $$
