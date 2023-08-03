@@ -1,0 +1,4 @@
+#!/usr/bin/env bash
+# Graham S. Paul (100-port_listening_on_localhost) - listen on port 98
+
+sudo nc -l 98

@@ -1,0 +1,4 @@
+#!/usr/bin/env bash
+# Graham S. Paul (1-show_attached_IPs) - display all active ipv4
+
+ifconfig | sed 's/  \+ //g' | grep "inet " | cut -d " " -f2
