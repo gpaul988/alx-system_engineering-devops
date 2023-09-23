@@ -1,0 +1,9 @@
+#!/usr/bin/env bash
+# Graham S. Paul (1-create_ssh_key_pair) - Create an ssh key pair
+
+KEY_NAME="school"
+KEY_PASS="betty"
+KEY_BITS="4096"
+
+
+ssh-keygen -b $KEY_BITS -N $KEY_PASS -f $KEY_NAME

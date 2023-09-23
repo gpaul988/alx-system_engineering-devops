@@ -1,0 +1,5 @@
+# Graham S. Paul (2-ssh_config) - SSH configuration file for the local client
+
+Host 100.26.165.15
+     PasswordAuthentication no
+     IdentityFile ~/.ssh/school
