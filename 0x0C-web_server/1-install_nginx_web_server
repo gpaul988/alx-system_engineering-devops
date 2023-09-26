@@ -1,0 +1,9 @@
+#!/usr/bin/env bash
+# Graham S. Paul (1-install_nginx_web_server)
+# Listen on port 80
+
+sudo apt-get -y update
+sudo apt-get -y install nginx
+echo "Hello World!" | sudo tee /usr/share/nginx/html/index.html
+echo "Hello World!" | sudo tee /var/www/html/index*html
+sudo service nginx start
