@@ -1,23 +1,31 @@
 #!/usr/bin/env bash
 # Graham S. Paul (1-install_nginx_web_server)
 # Modernizepackage list and install Nginx with automatic "yes"
-sudo apt-get update
-sudo apt-get install -y nginx
+#
 
-echo "Hello World!" | sudo tee /var/www/html/index.html
+echo -e "Updating and installing Nginx.\n"
+sudo apt-get update -y -qq && \
+	 sudo apt-get install nginx -y
 
-sudo bash -c 'cat <<EOF > /etc/nginx/sites-available/default
-server {
-    listen 80 default_server;
-    listen [::]:80 default_server;
+echo -e "\nSetting up some minor stuff.\n"
 
-    root /var/www/html;
-    index index.html;
+# Begin nginx
+sudo service nginx start
 
-    location / {
-        try_files \$uri \$uri/ =404;
-    }
-}
-EOF'
+# Grant access to nginx on firewall
+sudo ufw allow 'Nginx HTTP'
 
-sudo /etc/init.d/nginx restart
+# Grant ownership to website user files for easy editing
+sudo chown -R "$USER":"$USER" /var/www/html
+sudo chmod -R 755 /var/www
+
+# Backup default index
+cp /var/www/html/index.nginx-debian.html /var/www/html/index.nginx-debian.html.bckp
+
+# Develop fresh index
+echo -e "Hello World!" | dd status=none of=/var/www/html/index.nginx-debian.html
+
+# Restarting nginx
+sudo service nginx restart
+
+echo -e "\nCompleted. ✅\n"
