@@ -1,24 +1,17 @@
 #!/usr/bin/env bash
 # Graham S. Paul (0-custom_http_response_header)
-## Perform nginx server install and config
-
-sudo apt-get -y update
+# Increase the number of webservers.
+sudo apt-get update
 sudo apt-get -y install nginx
-echo "Hello World!" | sudo tee /var/www/html/index.html
-sudo service nginx start;
-
-# configure nginx server
-default_sites="/etc/nginx/sites-available/default";
-location=$(grep -Fn location $default_sites | head -1 | cut -d":" -f1);
-location_data="\\\tlocation /redirect_me {\n\t\treturn 301 https://youtu.be/mlUOUncSaTk;\n\t}\n\n";
-error_page="\\\terror_page 404 /404.html;\n";
-host_name=$(hostname);
-set_x_serverd_by="\\\tadd_header X-Served-By \"${host_name}\";\n";
-
-echo "Ceci n'est pas une page" | sudo tee "/var/www/html/404.html"
-
-## Update default site to redirect and start nginx server
-sudo sed -i "${location}i ${location_data}" ${default_sites};
-sudo sed -i "${location}i ${error_page}" ${default_sites};
-sudo sed -i "${location}i ${set_x_serverd_by}" ${default_sites};
-sudo service nginx restart;
+sudo chown $USER:$USER /var/www/html/index.html
+sudo touch index.html /var/www/html/
+echo 'Holberton School' > /var/www/html/index.html
+sudo mkdir /var/www/error
+sudo chown  $USER:$USER /var/www/error/
+echo "Ceci n'est pas une page" > /var/www/error/404.html
+sudo chown  $USER:$USER /etc/nginx/sites-available/
+sed -i '/server_name _/a location /redirect_me { rewrite ^ https://www.youtube.com/watch?v=QH2-TGUlw\u4? permanent; }' /etc/nginx/sites-available/default
+sed -i '/server_name _/a error_page 404 /404.html; location = /404.html {root /var/www/error/; internal; }' /etc/nginx/sites-available/default
+# in the server 1 also 2 this down
+sudo sed -i "/server_name _/a add_header X-Served-By $HOSTNAME;" /etc/nginx/sites-available/default
+sudo service nginx restart
