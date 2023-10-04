@@ -1,0 +1,5 @@
+#!/usr/bin/env bash
+# Graham S. Paul (0-nginx_likes_port_80) - Script to fix nginx web server
+
+sudo sed -i 's/sites-enabled/sites-available/g' "/etc/nginx/nginx.conf";
+sudo service nginx restart
