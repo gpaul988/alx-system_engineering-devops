@@ -1,35 +1,42 @@
 #!/usr/bin/env bash
 # Graham S. Paul (0-world_wide_web) - Show domain info in of a specific sub-domain
-# Output: Subdomain [SUB_DOMAIN] is a [RECORD_TYPE] record and points to [DESTINATION]
+query_dns() {
+  local domain="$1"
+  local subdomain="$2"
 
-domain="$1"; subdomain="$2";
-subs=("www" "lb-01" "web-01" "web-02")
+  # Use dig to query DNS information
+  result=$(dig "$subdomain.$domain" +short)
 
-# print the results to stdout
-displayResults () {
-    echo -e "The subdomain $1 is a $2 record and points to $3"
+  # Check if there is any output
+  if [ -z "$result" ]; then
+    echo "The subdomain $subdomain does not exist for $domain"
+  else
+    # Determine the record type (A or CNAME)
+    record_type=$(dig "$subdomain.$domain" | awk '{for (i=1; i<=NF; i++) { if ($i == "IN" && !(seen[$(i+1)]++)) print $(i+1) } }')
+
+    # Display the information
+    echo "The subdomain $subdomain is a $record_type record and points to $result"
+  fi
 }
 
-# dig the domain info
-getInfo () {
-    FQDN="$1"; SUBDOMAIN="$2";
-    ANSWER=$(dig "${FQDN}" | grep -A1 'ANSWER SECTION:' | awk 'NR>1');
-    RECORD_TYPE=$(echo "${ANSWER}" | awk '{print $4}');
-    DESTINATION=$(echo "${ANSWER}" | awk '{print $5}');
-    displayResults "$SUBDOMAIN" "$RECORD_TYPE" "$DESTINATION";
-}
-
-getSubs () {
-    for sub in "${subs[@]}"; do
-        getInfo "${sub}.${domain}" "${sub}";
-    done
-}
-
-# Check if subdomains are proovided
-if [ "$#" -eq 1 ]; then
-    getSubs
-    exit 0;
+# Check the number of arguments
+if [ $# -lt 1 ]; then
+  echo "Usage: $0 <domain> [subdomain]"
+  exit 1
 fi
 
-# display the specific domain if no other info is provided
-getInfo "${subdomain}.${domain}" "${subdomain}";
+domain="$1"
+subdomain="$2"
+
+# Default subdomains to audit
+subdomains=("www" "lb-01" "web-01" "web-02")
+
+# If subdomain is provided, only query that subdomain
+if [ -n "$subdomain" ]; then
+  query_dns "$domain" "$subdomain"
+else
+  # Query all default subdomains
+  for sub in "${subdomains[@]}"; do
+    query_dns "$domain" "$sub"
+  done
+fi	
