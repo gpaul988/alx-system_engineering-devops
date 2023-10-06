@@ -38,7 +38,7 @@ defaults
 
 listen lb
 	bind :80
-	bind :443 ssl crt /etc/letsencrypt/live/gpaul.info/combined.pem 
+	bind :443 ssl crt /etc/letsencrypt/live/grahamspaul.tech/combined.pem 
 	balance roundrobin
 	server 209955-web-01 54.82.216.202:80 check
 	server 209955-web-02 18.234.106.116:80 check
