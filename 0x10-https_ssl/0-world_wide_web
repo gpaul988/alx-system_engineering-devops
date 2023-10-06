@@ -1,6 +1,5 @@
 #!/usr/bin/env bash
-# Graham S. Paul (0-world_wide_web) - Show domain info in of a specific sub-domain
-# Output: The subdomain [SUB_DOMAIN] is a [RECORD_TYPE] record and points to [DESTINATION]
+# Graham S. Paul (0-world_wide_web) - Double the number of webservers
 
 if [ "$#" -eq 1 ]; then
     echo "$(dig www.$1 | awk '/ANSWER SECTION:/ {getline; print "The subdomain www is a "$4" record and points to "$5}')"
