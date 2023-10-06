@@ -2,34 +2,12 @@
 # Graham S. Paul (0-world_wide_web) - Show domain info in of a specific sub-domain
 # Output: The subdomain [SUB_DOMAIN] is a [RECORD_TYPE] record and points to [DESTINATION]
 
-domain="$1"; subdomain="$2";
-subs=("www" "lb-01" "web-01" "web-02")
-
-# print the results to stdout
-displayResults () {
-    echo -e "The subdomain $1 is a $2 record and points to $3"
-}
-
-# dig the domain info
-getInfo () {
-    FQDN="$1"; SUBDOMAIN="$2";
-    ANSWER=$(dig "${FQDN}" | grep -A1 'ANSWER SECTION:' | awk 'NR>1');
-    RECORD_TYPE=$(echo "${ANSWER}" | awk '{print $4}');
-    DESTINATION=$(echo "${ANSWER}" | awk '{print $5}');
-    displayResults "$SUBDOMAIN" "$RECORD_TYPE" "$DESTINATION";
-}
-
-getSubs () {
-    for sub in "${subs[@]}"; do
-        getInfo "${sub}.${domain}" "${sub}";
-    done
-}
-
-# Check if subdomains are proovided
 if [ "$#" -eq 1 ]; then
-    getSubs
-    exit 0;
+    echo "$(dig www.$1 | awk '/ANSWER SECTION:/ {getline; print "The subdomain www is a "$4" record and points to "$5}')"
+    echo "$(dig lb-01.$1 | awk '/ANSWER SECTION:/ {getline; print "The subdomain lb-01 is a "$4" record and points to "$5}')"
+    echo "$(dig web-01.$1 | awk '/ANSWER SECTION:/ {getline; print "The subdomain web-01 is a "$4" record and points to "$5}')"
+    echo "$(dig web-02.$1 | awk '/ANSWER SECTION:/ {getline; print "The subdomain web-02 is a "$4" record and points to "$5}')"
+elif [ "$#" -eq 2 ]; then
+    subdomain=$2
+    echo "$(dig $subdomain.$1 | awk '/ANSWER SECTION:/ {getline; print "The subdomain '"$subdomain"' is a "$4" record and points to "$5}')"
 fi
-
-# display the specific domain if no other info is provided
-getInfo "${subdomain}.${domain}" "${subdomain}";
