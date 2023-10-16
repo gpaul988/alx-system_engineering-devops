@@ -1,0 +1,4 @@
+#!/usr/bin/env bash
+# Graham S. Paul (0-iamsomeoneelse) - Boot command as someone else
+
+sudo -u "$1" whoami
