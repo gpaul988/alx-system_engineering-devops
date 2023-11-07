@@ -1,7 +1,7 @@
 #!/usr/bin/python3
-# Graham S. Paul (1-top_ten.py)
 """
-Question the Reddit API and pull the first ten hot posts for a given subreddit
+ Graham S. Paul (1-top_ten.py)
+ Question the Reddit API and pull the first ten hot posts for a given subreddit
 """
 import requests
 
