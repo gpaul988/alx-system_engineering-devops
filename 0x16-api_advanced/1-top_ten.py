@@ -1,25 +1,23 @@
 #!/usr/bin/python3
+# Graham S. PAul (1-top_ten.py)
 """
- Graham S. Paul (1-top_ten.py)
- Question the Reddit API and pull the first ten hot posts for a given subreddit
+Questions titles of top ten posts of a given subreddit
 """
 import requests
 
 
 def top_ten(subreddit):
-    posts = ""
-    if (type(subreddit) is not str):
-        posts = "None\n"
-    else:
-        api_url = "https://www.reddit.com/r/{}/hot.json".
-        ssssssormat(subreddit)
-        headers = {'user-agent': 'safari:holberton/0.1.0'}
-        response = requests.get(api_url, headers=headers)
-        if response.status_code is not 200:
-            posts = "None\n"
-        else:
-            posts_json = response.json().get("data").get("children")
-            for i in range(10):
-                post_title = posts_json[i].get("data").get("title")
-                posts += "{}\n".format(post_title)
-    print(posts, end="")
+    """
+        Pull top ten titles for a given subreddit or None
+        if invalid subreddit is given
+    """
+    headers = requests.utils.default_headers()
+    headers.update({'User-Agent': 'My User Agent 1.0'})
+
+    url = "https://www.reddit.com/r/{}/hot.json?limit=10".format(subreddit)
+    r = requests.get(url, headers=headers).json()
+    top_ten = r.get('data', {}).get('children', [])
+    if not top_ten:
+        print(None)
+    for title in top_ten:
+        print(title.get('data').get('title'))
