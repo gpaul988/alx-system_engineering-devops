@@ -1,4 +1,4 @@
-# Graham S. Paul (100-puppet_ssh_config.pp) - Modify the configuration file ssh_config
+# Graham S. Paul (100-puppet_ssh_config.pp) - Modify the confiration file ssh_config
 include stdlib
 
 file { '/etc/ssh/ssh_config':
