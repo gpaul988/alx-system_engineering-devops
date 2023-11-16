@@ -1,4 +1,4 @@
 #!/usr/bin/env bash
 # Graham S. Paul (0-use_a_private_key)
 # key in ~/.ssh/school for user ubuntu
-ssh -i ~/.ssh/school ubuntu@54.82.216.202
+ssh -i ~/.ssh/school ubuntu@34.207.62.3
