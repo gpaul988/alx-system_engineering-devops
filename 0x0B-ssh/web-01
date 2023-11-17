@@ -1,3 +1,4 @@
 #!/usr/bin/env bash
 # Graham S. Paul (web-01) - Script uses ssh to connect server using private key
-ssh ubuntu@54.82.216.202 -i ~/.ssh/id_rsa
+
+ssh ubuntu@34.207.62.3 -i ~/.ssh/school
